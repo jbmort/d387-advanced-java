@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
-import { Observable } from 'rxjs';
+import {observable, Observable} from 'rxjs';
 import {map} from "rxjs/operators";
 
 
@@ -27,6 +27,7 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  messages: String[] = [];
 
     ngOnInit(){
       this.roomsearch= new FormGroup({
@@ -34,6 +35,16 @@ export class AppComponent implements OnInit{
         checkout: new FormControl(' ')
       });
 
+      this.getMessages().subscribe(
+        (response) => {
+
+          for(let item of response){
+            this.messages.push(item)
+            console.log(item, response)
+          }
+        }
+      )
+      this.getMessages();
  //     this.rooms=ROOMS;
 
 
@@ -44,6 +55,8 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+
+
   }
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
@@ -76,6 +89,10 @@ export class AppComponent implements OnInit{
   /*mapRoom(response:HttpResponse<any>): Room[]{
     return response.body;
   }*/
+
+    getMessages(): Observable<any> {
+      return this.httpClient.get(this.getUrl + 'greeting')
+    }
 
     getAll(): Observable<any> {
 

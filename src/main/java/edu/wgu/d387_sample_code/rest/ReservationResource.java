@@ -34,6 +34,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static edu.wgu.d387_sample_code.model.Greeting.getGreetings;
+
 @RestController
 @RequestMapping(ResourceConstants.ROOM_RESERVATION_V1)
 @CrossOrigin
@@ -153,4 +155,9 @@ public class ReservationResource {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
+    @RequestMapping(path = "/greeting", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getMessages() throws InterruptedException {
+        List<String> messages = getGreetings();
+        return messages.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(messages, HttpStatus.OK);
+    }
 }
