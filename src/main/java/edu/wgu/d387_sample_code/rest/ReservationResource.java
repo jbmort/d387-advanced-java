@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static edu.wgu.d387_sample_code.model.Greeting.getGreetings;
+import static edu.wgu.d387_sample_code.model.eventTime.getEventMessage;
 
 @RestController
 @RequestMapping(ResourceConstants.ROOM_RESERVATION_V1)
@@ -158,6 +159,12 @@ public class ReservationResource {
     @RequestMapping(path = "/greeting", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getMessages() throws InterruptedException {
         List<String> messages = getGreetings();
+        return messages.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(messages, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/event", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getEvent(){
+        List<String> messages = getEventMessage();
         return messages.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(messages, HttpStatus.OK);
     }
 }

@@ -16,7 +16,8 @@
     <nav id="nav" style="position: relative; top: 0; left: 0; bottom: auto; right: auto; width: 100%;">
       <div class="navbar">
         <div *ngIf="messages.length > 0">
-              <p *ngFor="let message of messages" style="color: gold; font-weight: bold" >{{message}}</p></div>
+              <p *ngFor="let message of messages" style="color: gold; font-weight: bold" >{{message}}</p>
+        </div>
         <div class="brand"><a href="/#welcome">Landon <span>Hotel</span></a></div>
       </div><!-- navbar -->
     </nav>
@@ -24,12 +25,15 @@
 </header>
 <main id="wrapper">
   <div class="scene" id="welcome">
+
     <article class="content">
 
 
-
       <div class="row">
-        <div class=""col-12>
+        <div class="eventInfo">
+          <p *ngFor="let line of event" style="font-weight: 500">{{line}}</p>
+        </div>
+        <div class="col-12">
           <div class="gallery">
             <img src="assets/images/intro_room.jpg" alt="Intro Gallery Room Sample Pictures">
             <img src="assets/images/intro_pool.jpg" alt="Intro Gallery Pool Sample Pictures">

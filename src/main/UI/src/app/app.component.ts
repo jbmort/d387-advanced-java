@@ -28,8 +28,10 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
   messages: String[] = [];
+  event: String[] = [];
 
-    ngOnInit(){
+
+  ngOnInit(){
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
@@ -37,14 +39,21 @@ export class AppComponent implements OnInit{
 
       this.getMessages().subscribe(
         (response) => {
-
           for(let item of response){
             this.messages.push(item)
-            console.log(item, response)
           }
         }
       )
       this.getMessages();
+
+      this.getEventInfo().subscribe(
+        (response) => {
+          for(let item of response){
+            this.event.push(item)
+          }
+        }
+      )
+    this.getEventInfo()
  //     this.rooms=ROOMS;
 
 
@@ -89,6 +98,10 @@ export class AppComponent implements OnInit{
   /*mapRoom(response:HttpResponse<any>): Room[]{
     return response.body;
   }*/
+
+    getEventInfo(): Observable<any> {
+      return this.httpClient.get(this.getUrl + 'event')
+    }
 
     getMessages(): Observable<any> {
       return this.httpClient.get(this.getUrl + 'greeting')
